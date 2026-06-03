@@ -6,11 +6,14 @@ import useAuth from "../../../Hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { toast } from "react-toastify";
 import axios from "axios";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Register = () => {
     const { registerUser } = useAuth();
     const { updateUserProfile } = useAuth();
     const location= useLocation();
+        const axiosSecure = useAxiosSecure()
+
 
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -32,6 +35,20 @@ const Register = () => {
                 axios.post(imgAPIurl, formData)
                     .then(res => {
                         // console.log('after img upld',res.data.data.url)
+                        const photoURL = res.data.data.url;
+
+
+                        const userInfo={
+                            email:data.email,
+                            displayName:data.displayname,
+                            photoURL:photoURL
+                        }
+                            axiosSecure.post('/users',userInfo)
+                            .then(res=>{
+                                if(res.data.insertedId){
+                                    console.log('user created indb')
+                                }
+                            })
 
                         const userProfile = {
                             displayName: data.name,

@@ -1,12 +1,41 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Addpackage = () => {
+    const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const handlePackage = (data) => {
-        console.log(data)
+    const handlePackage =async (data) => {
+        // console.log(data)
+        try {
+            const imageFile = data.photo[0];
+            const formData = new FormData();
+            formData.append('image', imageFile);
 
+         const imgAPIurl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+
+        const imgRes = await axios.post(imgAPIurl, formData);
+        const thumbnailUrl = imgRes.data.data.display_url;
+
+         const serviceData = {
+                serviceCategory: data.category,
+                serviceName: data.serviceName,
+                serviceCost: data.cost,
+                serviceUnit: data.unit,
+                serviceDescription: data.description,
+                servicethumbnail: thumbnailUrl,          
+            };
+
+            const res=await  axiosSecure.post('/services', serviceData)
+           console.log('Service saved', res.data);
+            toast.success('Service saved');
+        }
+        catch (err) {
+            console.error(err);
+        }
 
     }
     return (
@@ -14,7 +43,7 @@ const Addpackage = () => {
             <h2 className="text-2xl ml-10 mt-5">Add service with package</h2>
 
             <form className="p-10"
-            onSubmit={handleSubmit(handlePackage)}>
+                onSubmit={handleSubmit(handlePackage)}>
 
                 <fieldset className="fieldset w-full ">
                     <label className="label">Service Category</label>
@@ -28,7 +57,7 @@ const Addpackage = () => {
                             <input type="radio"{...register('category')} value="Weidding" className="radio" />
                             Weidding</label>
                         <label className="label">
-                            <input type="radio"{...register('category')} value="Weidding" className="radio" />
+                            <input type="radio"{...register('category')} value="Others" className="radio" />
                             Others Party</label>
 
 
@@ -37,7 +66,7 @@ const Addpackage = () => {
                     {/* name */}
                     <label className="label">Service name</label>
                     <input {...register('serviceName', { required: true })}
-                     type="name"   className="input w-full" placeholder="Service name" />
+                        type="name" className="input w-full" placeholder="Service name" />
 
                     {errors.name?.type === 'required' &&
                         <p className='text-red-500'>serviceName required</p>}

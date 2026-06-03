@@ -7,22 +7,35 @@ import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Addpackage from "../pages/Dashboard/Addpackage/Addpackage";
+import AllServicesData from "../pages/Home/ServicesData/AllServiceData";
+import ServiceDetails from "../pages/Home/ServicesData/ServiceDetails";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-  Component: Rootlayout,
-  children:[
-    {
-        index:true,
+    Component: Rootlayout,
+    children: [
+      {
+        index: true,
         Component: Home,
         loader: () => fetch('/serviceCenters.json').then(res => res.json())
 
-    },
-    
-  ]
+      },
+      {
+        path: 'allServices',
+        Component: AllServicesData
+      },
+      {
+        path: "/serviceDetails/:id",
+        element: <ServiceDetails />,
+                loader: () => fetch('/serviceCenters.json').then(res => res.json())
+
+
+      },
+      
+    ]
   },
-    {
+  {
     path: '/',
     Component: AuthLayout,
     children: [
@@ -38,9 +51,9 @@ export const router = createBrowserRouter([
     ]
   },
   {
-    path:'dashboard',
+    path: 'dashboard',
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-    children:[
+    children: [
       {
         path: 'addPackage',
         Component: Addpackage
