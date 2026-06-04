@@ -9,6 +9,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Addpackage from "../pages/Dashboard/Addpackage/Addpackage";
 import AllServicesData from "../pages/Home/ServicesData/AllServiceData";
 import ServiceDetails from "../pages/Home/ServicesData/ServiceDetails";
+import MyBookings from "../pages/Dashboard/MyBookings/MyBookings";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +60,18 @@ export const router = createBrowserRouter([
       {
         path: 'addPackage',
         Component: Addpackage
+      },
+      {
+        path:'myBookings',
+        Component:MyBookings
+      },
+      {
+        path:'payment-success',
+        Component:PaymentSuccess    
+      },
+      {
+        path:'payment-cancelled',
+      Component:PaymentCancelled
       }
     ]
   }

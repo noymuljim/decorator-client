@@ -1,6 +1,8 @@
 import { LuPackagePlus } from "react-icons/lu";
-import { Link, NavLink, Outlet } from "react-router";
-import LandingPageLogo from "../assets/shome.png"
+import { NavLink, Outlet } from "react-router";
+import LandingPageLogo from "../assets/shome.png";
+import { IoBookmarks } from "react-icons/io5";
+
 
 const DashboardLayout = () => {
     return (
@@ -54,6 +56,18 @@ const DashboardLayout = () => {
 
                                 <LuPackagePlus />
                                 <span className="is-drawer-close:hidden">Add package</span>
+                            </NavLink>
+                        </li>
+
+                        {/* my bookings */}
+                        <li>
+                            <NavLink to='/dashboard/myBookings'
+
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My bookings">
+
+                               <IoBookmarks />
+
+                                <span className="is-drawer-close:hidden">My bookings</span>
                             </NavLink>
                         </li>
 

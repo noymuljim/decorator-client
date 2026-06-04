@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData, useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
+import { toast } from "react-toastify";
+
 
 const ServiceDetails = () => {
     const serviceCenters = useLoaderData();
-    // console.log(serviceCenters)
+
 
 
 
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { register,handleSubmit, control, formState: { errors }, } = useForm();
+    const { register, handleSubmit,reset, control, formState: { errors }, } = useForm();
+
+
 
     const regionsDuplicate = serviceCenters.map(c => c.region)
     const regions = [...new Set(regionsDuplicate)];
@@ -31,13 +35,28 @@ const ServiceDetails = () => {
     const { id } = useParams();
 
     const axiosSecure = useAxiosSecure()
-    const { data: service = [] } = useQuery({
+    const { data: service = {} } = useQuery({
         queryKey: ['service', id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/serviceDetails/${id}`);
             return res.data;
         }
     });
+
+
+
+    useEffect(() => {
+    if (service?._id) {
+        reset({
+            serviceName: service.serviceName,
+            serviceCost: service.serviceCost,
+            userName: user?.displayName,
+            userEmail: user?.email
+        });
+    }
+}, [service, user, reset]);
+
+
 
     const openServiceDetailModal = () => {
         if (!user) {
@@ -49,9 +68,15 @@ const ServiceDetails = () => {
     };
 
 
-    const handleConfirm=(data)=>{
-        console.log(data)
+    const handleConfirm = (data) => {
+
+        axiosSecure.post('/bookings', data)
+        toast.success('req confirmed')
+
     }
+
+
+
 
     return (
         <div>
@@ -80,75 +105,92 @@ const ServiceDetails = () => {
                 className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box space-y-2">
                     <h1 className="text-2xl font-bold py-5 text-center">Confirm your booking now</h1>
-                   <form onSubmit={handleSubmit(handleConfirm)}>
-                     {/* name */}
-                    <label className="label">User name</label>
-                    <input {...register('userName', { required: true })}
-                        type="text" className="input w-full" defaultValue={user?.displayName} placeholder="User name" />
 
-                    {errors.name?.type === 'required' &&
-                        <p className='text-red-500'>serviceName required</p>}
-                    {/* email */}
-                    <label className="label">Email</label>
-                    <input {...register('userEmail', { required: true })}
-                        type="email" className="input w-full" defaultValue={user?.email} placeholder="User name" />
+                    <form onSubmit={handleSubmit(handleConfirm)}>
+                        {/* name */}
+                        <label className="label">User name</label>
+                        <input {...register('userName', { required: true })}
+                            type="text" className="input w-full" defaultValue={user?.displayName} placeholder="User name" />
 
-                    {errors.name?.type === 'required' &&
-                        <p className='text-red-500'>serviceName required</p>}
-                    {/* service name */}
-                    <label className="label">Service name</label>
-                    <input {...register('serviceName', { required: true })}
-                        type="text" className="input w-full" defaultValue={service?.serviceName} placeholder="Service name" />
+                        {errors.userName?.type === 'required' &&
+                            <p className='text-red-500'>serviceName required</p>}
+                        {/* email */}
+                        <label className="label">Email</label>
+                        <input {...register('userEmail', { required: true })}
+                            type="email" className="input w-full" defaultValue={user?.email} readOnly placeholder="User name" />
 
-                    {errors.name?.type === 'required' &&
-                        <p className='text-red-500'>serviceName required</p>}
+                        {errors.userEmail?.type === 'required' &&
+                            <p className='text-red-500'>serviceName required</p>}
+                        {/* service name */}
+                        <label className="label">Service name</label>
+                        <input {...register('serviceName', { required: true })}
+                            type="text" className="input w-full" defaultValue={service?.serviceName} readOnly placeholder="Service name" />
+
+                        {errors.serviceName?.type === 'required' &&
+                            <p className='text-red-500'>serviceName required</p>}
+
+                        {/* service cost */}
+                        <label className="label">Service cost</label>
+                        <input
+                            {...register('serviceCost')}
+                            type="text"
+                            className="input w-full"
+                            defaultValue={service?.serviceCost}
+                            readOnly
+                        />
 
 
-                    {/* date */}
-                    <label className="label">Date</label> <br />
-                    <input {...register('date', { required: true })}
-                        type="date" className="input w-full" />
-                    {errors.date?.type === 'required' &&
-                        <p className='text-red-500'>Date is required</p>}
 
-                    {/* region */}
-                    <fieldset className="fieldset ">
-                        <legend className="fieldset-legend">Regions</legend>
-                        <select {...register('Region')} defaultValue="Pick a Region" className="select w-full">
-                            <option disabled={true}>Pick a region</option>
-                            {
-                                regions.map((r, i) => <option value={r} key={i}>{r}</option>)
-                            }
-                        </select>
-                    </fieldset>
-                    {/* district */}
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend ">District</legend>
-                        <select {...register('District')} defaultValue="Pick a District" className="select w-full">
-                            <option disabled={true}>Pick a district</option>
-                            {
-                                districtsByRegion(Region).map((r, i) => <option value={r} key={i}>{r}</option>)
-                            }
-                        </select>
-                    </fieldset>
-                    {/*address */}
-                    <label className="label">Address</label>
 
-                    <textarea {...register('address')}
-                        placeholder="Enter Address..."
-                        className="textarea textarea-bordered w-full overflow-y-auto resize-none"
-                    ></textarea>
-                    {/*description */}
-                    <label className="label">Description </label>
+                        {/* date */}
+                        <label className="label">Date</label> <br />
+                        <input {...register('date', { required: true })}
+                            type="date" className="input w-full" />
+                        {errors.date?.type === 'required' &&
+                            <p className='text-red-500'>Date is required</p>}
 
-                    <textarea {...register('description')}
-                        placeholder="Enter description..."
-                        className="textarea textarea-bordered w-full  overflow-y-auto resize-none"
-                    ></textarea>
+                        {/* region */}
+                        <fieldset className="fieldset ">
+                            <legend className="fieldset-legend">Regions</legend>
+                            <select {...register('Region')} defaultValue="Pick a Region" className="select w-full">
+                                <option disabled={true}>Pick a region</option>
+                                {
+                                    regions.map((r, i) => <option value={r} key={i}>{r}</option>)
+                                }
+                            </select>
+                        </fieldset>
+                        {/* district */}
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend ">District</legend>
+                            <select {...register('District')} defaultValue="Pick a District" className="select w-full">
+                                <option disabled={true}>Pick a district</option>
 
-                    <button 
-                    className="btn btn-primary my-3">Confirm</button>
-                   </form>
+                                {
+                                    Region &&
+                                    districtsByRegion(Region).map((r, i) => (
+                                        <option value={r} key={i}>{r}</option>
+                                    ))
+                                }
+                            </select>
+                        </fieldset>
+                        {/*address */}
+                        <label className="label">Address</label>
+
+                        <textarea {...register('address')}
+                            placeholder="Enter Address..."
+                            className="textarea textarea-bordered w-full overflow-y-auto resize-none"
+                        ></textarea>
+                        {/*description */}
+                        <label className="label">Description </label>
+
+                        <textarea {...register('description')}
+                            placeholder="Enter description..."
+                            className="textarea textarea-bordered w-full  overflow-y-auto resize-none"
+                        ></textarea>
+
+                        <button
+                            className="btn btn-primary my-3">Confirm</button>
+                    </form>
 
 
                     <div className="modal-action">
