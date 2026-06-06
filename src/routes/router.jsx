@@ -12,6 +12,13 @@ import ServiceDetails from "../pages/Home/ServicesData/ServiceDetails";
 import MyBookings from "../pages/Dashboard/MyBookings/MyBookings";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled/PaymentCancelled";
+import AllBookings from "../pages/Dashboard/AllBookings/AllBookings";
+import PyamnetHistory from "../pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
+import BeDecorator from "../pages/Dashboard/BeDecorator/BeDecorator";
+import ApproveDecorator from "../pages/Dashboard/ApproveDecorator/ApproveDecorator";
+import UserManagement from "../pages/Dashboard/UserManagement/UserManagement";
+import AdminRoute from "./AdminRoute";
+import OrderAssign from "../pages/Dashboard/OrderAssign/OrderAssign";
 
 export const router = createBrowserRouter([
   {
@@ -66,12 +73,42 @@ export const router = createBrowserRouter([
         Component:MyBookings
       },
       {
+        path:'allBookings',
+        Component:AllBookings
+      },
+      {
         path:'payment-success',
         Component:PaymentSuccess    
       },
       {
+        path:'paymentHistory',
+        Component:PyamnetHistory    
+      },
+      {
         path:'payment-cancelled',
       Component:PaymentCancelled
+      },
+      {
+        path:'approveDecorator',
+        // Component:ApproveDecorator
+        element:<AdminRoute><ApproveDecorator></ApproveDecorator></AdminRoute>
+      },
+      {
+        path:'userManagement',
+        // Component:UserManagement
+        element:<AdminRoute><UserManagement></UserManagement></AdminRoute>
+      },
+      {
+        path:'orderAssign',
+        // Component:UserManagement
+        element:<AdminRoute><OrderAssign></OrderAssign></AdminRoute>
+      },
+      
+      {
+        path:'beDecorator',
+        Component: BeDecorator,
+         loader: () => fetch('/serviceCenters.json').then(res => res.json())
+
       }
     ]
   }

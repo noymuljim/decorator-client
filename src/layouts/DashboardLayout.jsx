@@ -2,9 +2,16 @@ import { LuPackagePlus } from "react-icons/lu";
 import { NavLink, Outlet } from "react-router";
 import LandingPageLogo from "../assets/shome.png";
 import { IoBookmarks } from "react-icons/io5";
+import { FaBookmark, FaHistory, FaUserCheck, FaUsers } from "react-icons/fa";
+import { GrUserWorker } from "react-icons/gr";
+import useRole from "../Hooks/useRole";
+import { MdBorderColor } from "react-icons/md";
+
+
 
 
 const DashboardLayout = () => {
+    const { role } = useRole()
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -31,14 +38,14 @@ const DashboardLayout = () => {
                     <ul className="menu w-full grow">
                         {/* List item */}
 
-                       
+
 
                         <li>
                             <NavLink to='/'
 
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Back to home">
 
-                               <img className="h-[25px] w-[30px] " src={LandingPageLogo} alt="" />
+                                <img className="h-[25px] w-[30px] " src={LandingPageLogo} alt="" />
                                 <span className="is-drawer-close:hidden">Back to home</span>
                             </NavLink>
                         </li>
@@ -47,17 +54,63 @@ const DashboardLayout = () => {
 
 
 
+                        {
+                            role === 'admin' && <>
+                                <li>
+                                    <NavLink to='/dashboard/addPackage'
 
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add package">
 
-                        <li>
-                            <NavLink to='/dashboard/addPackage'
+                                        <LuPackagePlus />
+                                        <span className="is-drawer-close:hidden">Add package</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/approveDecorator'
 
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add package">
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve decorator">
 
-                                <LuPackagePlus />
-                                <span className="is-drawer-close:hidden">Add package</span>
-                            </NavLink>
-                        </li>
+                                        <FaUserCheck />
+
+                                        <span className="is-drawer-close:hidden">Approve decorator</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/userManagement'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User management">
+
+                                        <FaUsers />
+
+                                        <span className="is-drawer-close:hidden">User management</span>
+                                    </NavLink>
+                                </li>
+
+                                <li>
+                                    <NavLink to='/dashboard/allBookings'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All bookings">
+
+                                        <IoBookmarks />
+
+                                        <span className="is-drawer-close:hidden">All bookings</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/orderAssign'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign order">
+
+                                     
+                                           <MdBorderColor />
+
+                                        <span className="is-drawer-close:hidden">Assign order</span>
+                                    </NavLink>
+                                </li>
+
+                            </>
+                        }
+
 
                         {/* my bookings */}
                         <li>
@@ -65,9 +118,31 @@ const DashboardLayout = () => {
 
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My bookings">
 
-                               <IoBookmarks />
+                                <FaBookmark />
+
 
                                 <span className="is-drawer-close:hidden">My bookings</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/dashboard/paymentHistory'
+
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history">
+
+                                <FaHistory />
+
+                                <span className="is-drawer-close:hidden">Payment history</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/dashboard/beDecorator'
+
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply as Decorator">
+
+                                <GrUserWorker />
+
+
+                                <span className="is-drawer-close:hidden">Apply as Decorator</span>
                             </NavLink>
                         </li>
 

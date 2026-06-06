@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 
 const MyBookings = () => {
+    
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure()
 
@@ -73,7 +74,9 @@ const MyBookings = () => {
                             <th>#</th>
                             <th>Service name</th>
                             <th>Servicec cost</th>
-                            <th>Pay</th>
+                            <th>Payment</th>
+                                  <th>trackingId Id</th>
+                            <th>Booking status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -88,6 +91,12 @@ const MyBookings = () => {
                                         booking.paymentStatus === 'paid' ? <span className="text-success">Paid</span> : <button onClick={() => haldlePayment(booking)}
                                             className="btn-sm btn">Pay now</button>
                                     }
+                                </td>
+                                <td>
+                                    {booking.trackingId}
+                                </td>
+                                <td>
+                                    {booking.bookingStatus}
                                 </td>
                                 <td>
                                     <button onClick={() => handleDelete(booking._id)}

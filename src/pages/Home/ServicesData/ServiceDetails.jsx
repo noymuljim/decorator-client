@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 
 const ServiceDetails = () => {
+    
     const serviceCenters = useLoaderData();
 
 
@@ -71,12 +72,10 @@ const ServiceDetails = () => {
     const handleConfirm = (data) => {
 
         axiosSecure.post('/bookings', data)
+        console.log(data)
         toast.success('req confirmed')
 
     }
-
-
-
 
     return (
         <div>
