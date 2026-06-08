@@ -5,7 +5,10 @@ import { IoBookmarks } from "react-icons/io5";
 import { FaBookmark, FaHistory, FaUserCheck, FaUsers } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
 import useRole from "../Hooks/useRole";
+import { BsListTask } from "react-icons/bs";
 import { MdBorderColor } from "react-icons/md";
+import { FaMoneyBill1Wave } from "react-icons/fa6";
+
 
 
 
@@ -101,8 +104,8 @@ const DashboardLayout = () => {
 
                                         className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign order">
 
-                                     
-                                           <MdBorderColor />
+
+                                        <MdBorderColor />
 
                                         <span className="is-drawer-close:hidden">Assign order</span>
                                     </NavLink>
@@ -112,6 +115,31 @@ const DashboardLayout = () => {
                         }
 
 
+                        {
+                            role === 'decorator' && <>
+                                <li>
+                                    <NavLink to='/dashboard/taskAssigned'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Task assigned">
+
+                                        <BsListTask />
+
+                                        <span className="is-drawer-close:hidden">Task assigned</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/myEarnings'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Earning">
+
+                                     <FaMoneyBill1Wave />
+
+
+                                        <span className="is-drawer-close:hidden">Earning</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
                         {/* my bookings */}
                         <li>
                             <NavLink to='/dashboard/myBookings'

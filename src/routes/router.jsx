@@ -19,6 +19,9 @@ import ApproveDecorator from "../pages/Dashboard/ApproveDecorator/ApproveDecorat
 import UserManagement from "../pages/Dashboard/UserManagement/UserManagement";
 import AdminRoute from "./AdminRoute";
 import OrderAssign from "../pages/Dashboard/OrderAssign/OrderAssign";
+import TaskAssigned from "../pages/Dashboard/TaskAssigned/TaskAssigned";
+import DecoratorRoute from "./DecoratorRoute";
+import Earnings from "../pages/Dashboard/Earnings/Earnings";
 
 export const router = createBrowserRouter([
   {
@@ -103,7 +106,15 @@ export const router = createBrowserRouter([
         // Component:UserManagement
         element:<AdminRoute><OrderAssign></OrderAssign></AdminRoute>
       },
-      
+      {
+        path:'taskAssigned',
+        // Component:TaskAssigned
+        element:<DecoratorRoute><TaskAssigned></TaskAssigned></DecoratorRoute>
+      },
+      {
+        path:'myEarnings',
+        element:<DecoratorRoute><Earnings></Earnings></DecoratorRoute>
+      },
       {
         path:'beDecorator',
         Component: BeDecorator,
