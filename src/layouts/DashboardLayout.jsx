@@ -8,6 +8,7 @@ import useRole from "../Hooks/useRole";
 import { BsListTask } from "react-icons/bs";
 import { MdBorderColor } from "react-icons/md";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
+import { RiCalendarScheduleLine } from "react-icons/ri";
 
 
 
@@ -134,6 +135,17 @@ const DashboardLayout = () => {
                                         <BsListTask />
 
                                         <span className="is-drawer-close:hidden">Task assigned</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/todaySchedule'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Today schedule">
+
+                                       <RiCalendarScheduleLine />
+
+
+                                        <span className="is-drawer-close:hidden">Today schedule</span>
                                     </NavLink>
                                 </li>
                                 <li>

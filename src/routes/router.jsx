@@ -24,6 +24,7 @@ import DecoratorRoute from "./DecoratorRoute";
 import Earnings from "../pages/Dashboard/Earnings/Earnings";
 import Tracking from "../pages/Tracking/Tracking";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import TodaySchedule from "../pages/Dashboard/TodaySchedule/TodaySchedule";
 
 export const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
         path:'taskAssigned',
         // Component:TaskAssigned
         element:<DecoratorRoute><TaskAssigned></TaskAssigned></DecoratorRoute>
+      },
+      {
+        path:'todaySchedule',
+        element:<DecoratorRoute><TodaySchedule></TodaySchedule></DecoratorRoute>
       },
       {
         path:'myEarnings',
