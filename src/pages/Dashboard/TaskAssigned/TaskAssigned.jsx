@@ -18,7 +18,11 @@ const TaskAssigned = () => {
     })
 
     const handleStatusUpdate = (booking, status) => {
-        const statusInfo = { bookingStatus: status,decoratorId:booking.decoratorId  }
+
+        const statusInfo = { bookingStatus: status,decoratorId:booking.decoratorId ,
+                        trackingId:booking.trackingId
+
+         }
         let message = `Booking status updated with${status.split('_').join(" ")}`
 
         axiosSecure.patch(`/bookings/${booking._id}/status`, statusInfo)

@@ -3,6 +3,7 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 
 const MyBookings = () => {
@@ -55,7 +56,8 @@ const MyBookings = () => {
             cost: booking.serviceCost,
             bookingId: booking._id,
             userEmail: booking.userEmail,
-            serviceName: booking.serviceName
+            serviceName: booking.serviceName,
+            trackingId:booking.trackingId
         }
 
         const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
@@ -75,7 +77,7 @@ const MyBookings = () => {
                             <th>Service name</th>
                             <th>Servicec cost</th>
                             <th>Payment</th>
-                                  <th>trackingId Id</th>
+                             <th>trackingId Id</th>
                             <th>Booking status</th>
                             <th>Action</th>
                         </tr>
@@ -93,7 +95,7 @@ const MyBookings = () => {
                                     }
                                 </td>
                                 <td>
-                                    {booking.trackingId}
+                                   <Link to={`/booking-track/${booking.trackingId}`}> {booking.trackingId}</Link>
                                 </td>
                                 <td>
                                     {booking.bookingStatus}

@@ -22,6 +22,8 @@ import OrderAssign from "../pages/Dashboard/OrderAssign/OrderAssign";
 import TaskAssigned from "../pages/Dashboard/TaskAssigned/TaskAssigned";
 import DecoratorRoute from "./DecoratorRoute";
 import Earnings from "../pages/Dashboard/Earnings/Earnings";
+import Tracking from "../pages/Tracking/Tracking";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: 'allServices',
         Component: AllServicesData
+      },
+       {
+        path: 'booking-track/:trackingId',
+        Component: Tracking
       },
       {
         path: "/serviceDetails/:id",
@@ -67,6 +73,10 @@ export const router = createBrowserRouter([
     path: 'dashboard',
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
+      {
+        index: true,
+        Component: DashboardHome
+      },
       {
         path: 'addPackage',
         Component: Addpackage

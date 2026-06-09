@@ -39,6 +39,9 @@ const OrderAssign = () => {
             decoratorEmail:decorator.decoratorEmail,
             decoratorName:decorator.decoratorName,
             bookingId:selectedBooking._id,
+
+            trackingId: selectedBooking.trackingId
+
         }
               axiosSecure.patch(`/bookings/${selectedBooking._id}`,decoratorAssignInfo)
                .then(res => {
