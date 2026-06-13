@@ -26,11 +26,16 @@ const Addpackage = () => {
                 serviceCost: data.cost,
                 serviceUnit: data.unit,
                 serviceDescription: data.description,
-                servicethumbnail: thumbnailUrl,          
+                servicethumbnail: thumbnailUrl,
+                createdBy: user?.email,
+          
             };
+
+           
 
             const res=await  axiosSecure.post('/services', serviceData)
            console.log('Service saved', res.data);
+            console.log(serviceData)
             toast.success('Service saved');
         }
         catch (err) {

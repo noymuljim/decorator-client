@@ -13,7 +13,7 @@ const DashboardHome = () => {
      if(role=== 'admin'){
         return <AdminDashboardHome></AdminDashboardHome>
     }
-    else if( role=== 'rider'){
+    else if( role=== 'decorator'){
         return<DecoratorDashboardHome></DecoratorDashboardHome>
     }
     else{

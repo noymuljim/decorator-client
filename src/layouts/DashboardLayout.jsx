@@ -6,7 +6,7 @@ import { FaBookmark, FaHistory, FaUserCheck, FaUsers } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
 import useRole from "../Hooks/useRole";
 import { BsListTask } from "react-icons/bs";
-import { MdBorderColor } from "react-icons/md";
+import { MdBorderColor, MdOutlineDesignServices } from "react-icons/md";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 
@@ -54,14 +54,14 @@ const DashboardLayout = () => {
                             </NavLink>
                         </li>
 
-                           <li>
+                        <li>
                             <Link to={'/dashboard'}>
                                 <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
                                     {/* Home icon */}
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                                     <span className="is-drawer-close:hidden mx-5">Homepage</span>
                                 </button></Link>
-                      </li>
+                        </li>
 
 
 
@@ -76,6 +76,17 @@ const DashboardLayout = () => {
 
                                         <LuPackagePlus />
                                         <span className="is-drawer-close:hidden">Add package</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/my-services'
+
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All services">
+
+                                        <MdOutlineDesignServices />
+
+
+                                        <span className="is-drawer-close:hidden">All services</span>
                                     </NavLink>
                                 </li>
                                 <li>
@@ -142,7 +153,7 @@ const DashboardLayout = () => {
 
                                         className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Today schedule">
 
-                                       <RiCalendarScheduleLine />
+                                        <RiCalendarScheduleLine />
 
 
                                         <span className="is-drawer-close:hidden">Today schedule</span>
@@ -153,7 +164,7 @@ const DashboardLayout = () => {
 
                                         className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Earning">
 
-                                     <FaMoneyBill1Wave />
+                                        <FaMoneyBill1Wave />
 
 
                                         <span className="is-drawer-close:hidden">Earning</span>
@@ -162,18 +173,21 @@ const DashboardLayout = () => {
                             </>
                         }
                         {/* my bookings */}
-                        <li>
-                            <NavLink to='/dashboard/myBookings'
-
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My bookings">
-
-                                <FaBookmark />
-
-
-                                <span className="is-drawer-close:hidden">My bookings</span>
-                            </NavLink>
-                        </li>
-                        <li>
+                        {role === 'user' && (
+                            <li>
+                                <NavLink
+                                    to="/dashboard/myBookings"
+                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                                    data-tip="My bookings"
+                                >
+                                    <FaBookmark />
+                                    <span className="is-drawer-close:hidden">My bookings</span>
+                                </NavLink>
+                            </li>
+                        )}
+                      {
+                        role==='user' && <>
+                         <li>
                             <NavLink to='/dashboard/paymentHistory'
 
                                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history">
@@ -183,19 +197,22 @@ const DashboardLayout = () => {
                                 <span className="is-drawer-close:hidden">Payment history</span>
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/dashboard/beDecorator'
 
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply as Decorator">
+                         <li>
+                                    <NavLink to='/dashboard/beDecorator'
 
-                                <GrUserWorker />
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply as Decorator">
 
+                                        <GrUserWorker />
+                                        <span className="is-drawer-close:hidden">Apply as Decorator</span>
+                                    </NavLink>
+                                </li>
 
-                                <span className="is-drawer-close:hidden">Apply as Decorator</span>
-                            </NavLink>
-                        </li>
-
-
+                        </>
+                             
+                        
+                      }
+                      
                         {/* List item */}
                         <li>
                             <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">

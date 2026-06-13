@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const axiosInstance= axios.create({
-   baseURL: 'http://localhost:3000'
+   baseURL: 'https://style-server.vercel.app'
 })
+
 
 const useAxios = () => {
        return axiosInstance;

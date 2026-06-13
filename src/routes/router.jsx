@@ -25,6 +25,9 @@ import Earnings from "../pages/Dashboard/Earnings/Earnings";
 import Tracking from "../pages/Tracking/Tracking";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import TodaySchedule from "../pages/Dashboard/TodaySchedule/TodaySchedule";
+import MyServices from "../pages/Dashboard/MyServices/MyServices";
+import UpdateService from "../pages/Dashboard/MyServices/UpdateService";
+import Profile from "../pages/Home/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -41,18 +44,22 @@ export const router = createBrowserRouter([
         path: 'allServices',
         Component: AllServicesData
       },
-       {
+      {
+        path: 'profile',
+        Component: Profile
+      },
+      {
         path: 'booking-track/:trackingId',
         Component: Tracking
       },
       {
         path: "/serviceDetails/:id",
         element: <ServiceDetails />,
-                loader: () => fetch('/serviceCenters.json').then(res => res.json())
+        loader: () => fetch('/serviceCenters.json').then(res => res.json())
 
 
       },
-      
+
     ]
   },
   {
@@ -83,57 +90,68 @@ export const router = createBrowserRouter([
         Component: Addpackage
       },
       {
-        path:'myBookings',
-        Component:MyBookings
+        path: 'myBookings',
+        Component: MyBookings
       },
       {
-        path:'allBookings',
-        Component:AllBookings
+        path: 'allBookings',
+        Component: AllBookings
       },
       {
-        path:'payment-success',
-        Component:PaymentSuccess    
+        path: 'payment-success',
+        Component: PaymentSuccess
       },
       {
-        path:'paymentHistory',
-        Component:PyamnetHistory    
+        path: 'paymentHistory',
+        Component: PyamnetHistory
       },
       {
-        path:'payment-cancelled',
-      Component:PaymentCancelled
+        path: 'payment-cancelled',
+        Component: PaymentCancelled
       },
       {
-        path:'approveDecorator',
+        path: 'approveDecorator',
         // Component:ApproveDecorator
-        element:<AdminRoute><ApproveDecorator></ApproveDecorator></AdminRoute>
+        element: <AdminRoute><ApproveDecorator></ApproveDecorator></AdminRoute>
       },
       {
-        path:'userManagement',
+        path: 'userManagement',
         // Component:UserManagement
-        element:<AdminRoute><UserManagement></UserManagement></AdminRoute>
+        element: <AdminRoute><UserManagement></UserManagement></AdminRoute>
       },
       {
-        path:'orderAssign',
+        path: 'orderAssign',
         // Component:UserManagement
-        element:<AdminRoute><OrderAssign></OrderAssign></AdminRoute>
+        element: <AdminRoute><OrderAssign></OrderAssign></AdminRoute>
       },
       {
-        path:'taskAssigned',
+        path: "my-services",
+        element: <AdminRoute><MyServices></MyServices></AdminRoute>
+      },
+      {
+        path: "update-service/:id",
+        loader: ({ params }) =>
+          fetch(`https://style-server.vercel.app/services/${params.id}`),
+        element: <AdminRoute><UpdateService></UpdateService></AdminRoute>
+      },
+      {
+        path: 'taskAssigned',
         // Component:TaskAssigned
-        element:<DecoratorRoute><TaskAssigned></TaskAssigned></DecoratorRoute>
+        element: <DecoratorRoute><TaskAssigned></TaskAssigned></DecoratorRoute>
       },
       {
-        path:'todaySchedule',
-        element:<DecoratorRoute><TodaySchedule></TodaySchedule></DecoratorRoute>
+        path: 'todaySchedule',
+        element: <DecoratorRoute><TodaySchedule></TodaySchedule></DecoratorRoute>
       },
       {
-        path:'myEarnings',
-        element:<DecoratorRoute><Earnings></Earnings></DecoratorRoute>
+        path: 'myEarnings',
+        element: <DecoratorRoute><Earnings></Earnings></DecoratorRoute>
       },
       {
-        path:'beDecorator',
-        Component: BeDecorator,
-         loader: () => fetch('/serviceCenters.json').then(res => res.json())
+        path: 'beDecorator',
+        // Component: BeDecorator,
+        element:<PrivateRoute><BeDecorator></BeDecorator></PrivateRoute>,
+        loader: () => fetch('/serviceCenters.json').then(res => res.json())
 
       }
     ]
