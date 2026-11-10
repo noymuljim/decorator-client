@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { FaRegTrashAlt } from "react-icons/fa";
-import Swal from "sweetalert2";
 import { Link } from "react-router";
 
 
@@ -11,7 +9,7 @@ const MyBookings = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure()
 
-    const { data: bookings = [], refetch } = useQuery({
+    const { data: bookings = []} = useQuery({
 
         queryKey: ['my-bookings', user?.email],
         queryFn: async () => {
@@ -20,36 +18,6 @@ const MyBookings = () => {
         }
     })
 
-    const handleDelete = (id) => {
-        console.log(id)
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/bookings/${id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.deletedCount) {
-                            refetch()
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
-            }
-
-        });
-
-    }
 
     const haldlePayment = async (booking) => {
         const paymentInfo = {
@@ -66,20 +34,19 @@ const MyBookings = () => {
     }
     return (
         <div>
-            <h2 className="text-3xl"> My bookings:{bookings.length}</h2>
+            <h2 className="text-3xl"> My all bookings data: {bookings.length}</h2>
 
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Service name</th>
                             <th>Servicec cost</th>
                             <th>Payment</th>
-                             <th>trackingId Id</th>
+                             <th>trackingId Id(click to track)</th>
                             <th>Booking status</th>
-                            <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -95,19 +62,12 @@ const MyBookings = () => {
                                     }
                                 </td>
                                 <td>
-                                   <Link to={`/booking-track/${booking.trackingId}`}> {booking.trackingId}</Link>
+                                   <Link to={`/booking-track/${booking.trackingId}`} className="text-blue-500 underline">  {booking.trackingId}</Link>
                                 </td>
                                 <td>
                                     {booking.bookingStatus}
                                 </td>
-                                <td>
-                                    <button onClick={() => handleDelete(booking._id)}
-                                        className="btn btn-circle hover:bg-red-300">
-                                        <FaRegTrashAlt />
-                                    </button>
-
-
-                                </td>
+                              
 
                             </tr>)
                         }

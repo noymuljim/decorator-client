@@ -24,7 +24,6 @@ import DecoratorRoute from "./DecoratorRoute";
 import Earnings from "../pages/Dashboard/Earnings/Earnings";
 import Tracking from "../pages/Tracking/Tracking";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
-import TodaySchedule from "../pages/Dashboard/TodaySchedule/TodaySchedule";
 import MyServices from "../pages/Dashboard/MyServices/MyServices";
 import UpdateService from "../pages/Dashboard/MyServices/UpdateService";
 import Profile from "../pages/Home/Profile/Profile";
@@ -111,17 +110,14 @@ export const router = createBrowserRouter([
       },
       {
         path: 'approveDecorator',
-        // Component:ApproveDecorator
         element: <AdminRoute><ApproveDecorator></ApproveDecorator></AdminRoute>
       },
       {
         path: 'userManagement',
-        // Component:UserManagement
         element: <AdminRoute><UserManagement></UserManagement></AdminRoute>
       },
       {
         path: 'orderAssign',
-        // Component:UserManagement
         element: <AdminRoute><OrderAssign></OrderAssign></AdminRoute>
       },
       {
@@ -131,18 +127,14 @@ export const router = createBrowserRouter([
       {
         path: "update-service/:id",
         loader: ({ params }) =>
-          fetch(`https://style-server.vercel.app/services/${params.id}`),
+          fetch(`http://localhost:3000/services/${params.id}`),
         element: <AdminRoute><UpdateService></UpdateService></AdminRoute>
       },
       {
         path: 'taskAssigned',
-        // Component:TaskAssigned
         element: <DecoratorRoute><TaskAssigned></TaskAssigned></DecoratorRoute>
       },
-      {
-        path: 'todaySchedule',
-        element: <DecoratorRoute><TodaySchedule></TodaySchedule></DecoratorRoute>
-      },
+
       {
         path: 'myEarnings',
         element: <DecoratorRoute><Earnings></Earnings></DecoratorRoute>

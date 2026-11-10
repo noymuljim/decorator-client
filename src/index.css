@@ -1,23 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 @import "tailwindcss";
-@plugin "daisyui"{
-     themes: light --default;
-
+@plugin "daisyui" {
+  themes: light --default;
 }
 
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #6E1B1C;
-  --color-secondary: #E0B084;
-  --color-bg: #EAECED;
+  /* Primary: Vibrant Coral */
+  --color-primary: #FF6F61;
+  --color-primary-content: #FFFFFF;
+
+  /* Secondary: Warm Soft Peach */
+  --color-secondary: #FFC09F;
+  --color-secondary-content: #2D1E18;
+
+  /* Neutral Background & Base Surface Colors */
+  --color-bg: #FFF7F5;
+  --color-base-100: #FFFFFF;
+  --color-base-200: #FFF3F0;
+  --color-base-300: #FFE5DE;
+  --color-base-content: #2D1E18;
 }
 
-
-
-body{
+body {
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  /* Warm, inviting gradient with subtle coral & peach undertones */
+  background: linear-gradient(135deg, #ffc1c1 0%, #fff7f5 50%, #eac2fc 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
 }

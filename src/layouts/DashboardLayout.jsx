@@ -1,6 +1,5 @@
 import { LuPackagePlus } from "react-icons/lu";
 import { Link, NavLink, Outlet } from "react-router";
-import LandingPageLogo from "../assets/shome.png";
 import { IoBookmarks } from "react-icons/io5";
 import { FaBookmark, FaHistory, FaUserCheck, FaUsers } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
@@ -8,221 +7,147 @@ import useRole from "../Hooks/useRole";
 import { BsListTask } from "react-icons/bs";
 import { MdBorderColor, MdOutlineDesignServices } from "react-icons/md";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-
-
-
+import Logo from "../components/Logo";
+import { SiFacebookgaming } from "react-icons/si";
 
 
 const DashboardLayout = () => {
-    const { role } = useRole()
+    const { role } = useRole();
+    const navLinkClasses = ({ isActive }) =>
+        `flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
+            isActive
+                ? "bg-primary text-primary-content shadow-sm"
+                : "text-base-content/70 hover:bg-base-200 hover:text-base-content"
+        }`;
+
     return (
-        <div className="drawer lg:drawer-open">
+        <div className="drawer lg:drawer-open min-h-screen bg-base-100">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            
+            {/* Main Content Area */}
+            <div className="drawer-content flex flex-col min-h-screen bg-base-200/40">
                 {/* Navbar */}
-                <nav className="navbar w-full bg-base-300">
-                    <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                        {/* Sidebar toggle icon */}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
-                    </label>
-                    <div className="px-4">Navbar Title</div>
-                </nav>
-                {/* Page content here */}
+                <header className="navbar sticky top-0 z-30 w-full bg-base-100/80 backdrop-blur-md border-b border-base-200 px-4 py-3 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                     
+                        <h1 className="font-bold text-xl tracking-tight text-base-content">
+                            Dashboard
+                        </h1>
+                    </div>
 
-                <Outlet></Outlet>
+                    {/* Role Badge Accent */}
+                    {role && (
+                        <div className="badge badge-primary badge-outline capitalize font-semibold px-3 py-2 text-xs">
+                            {role} Portal
+                        </div>
+                    )}
+                </header>
 
-
+                {/* Page Content Rendered Here */}
+                <main className="flex-1 p-4 md:p-8 max-w-7xl w-full mx-auto">
+                    <Outlet />
+                </main>
             </div>
 
-            <div className="drawer-side is-drawer-close:overflow-visible">
+            {/* Sidebar Drawer */}
+            <div className="drawer-side z-40">
                 <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-                    {/* Sidebar content here */}
-                    <ul className="menu w-full grow">
-                        {/* List item */}
+                
+                <aside className="w-64 min-h-full bg-base-100 border-r border-base-200 flex flex-col">
+                    
+                    {/* Brand Header */}
+                    <div className="p-5 border-b border-base-200">
+                        <Link to="/" className="flex items-center gap-3">
+            <Logo></Logo>                            <div className="flex flex-col">
+                                
+                            </div>
+                        </Link>
+                    </div>
 
-
-
-                        <li>
-                            <NavLink to='/'
-
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Back to home">
-
-                                <img className="h-[25px] w-[30px] " src={LandingPageLogo} alt="" />
-                                <span className="is-drawer-close:hidden">Back to home</span>
-                            </NavLink>
-                        </li>
-
-                        <li>
-                            <Link to={'/dashboard'}>
-                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                                    {/* Home icon */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                                    <span className="is-drawer-close:hidden mx-5">Homepage</span>
-                                </button></Link>
-                        </li>
-
-
-
-
-
-                        {
-                            role === 'admin' && <>
-                                <li>
-                                    <NavLink to='/dashboard/addPackage'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add package">
-
-                                        <LuPackagePlus />
-                                        <span className="is-drawer-close:hidden">Add package</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/my-services'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All services">
-
-                                        <MdOutlineDesignServices />
-
-
-                                        <span className="is-drawer-close:hidden">All services</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/approveDecorator'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve decorator">
-
-                                        <FaUserCheck />
-
-                                        <span className="is-drawer-close:hidden">Approve decorator</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/userManagement'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User management">
-
-                                        <FaUsers />
-
-                                        <span className="is-drawer-close:hidden">User management</span>
-                                    </NavLink>
-                                </li>
-
-                                <li>
-                                    <NavLink to='/dashboard/allBookings'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All bookings">
-
-                                        <IoBookmarks />
-
-                                        <span className="is-drawer-close:hidden">All bookings</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/orderAssign'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign order">
-
-
-                                        <MdBorderColor />
-
-                                        <span className="is-drawer-close:hidden">Assign order</span>
-                                    </NavLink>
-                                </li>
-
-                            </>
-                        }
-
-
-                        {
-                            role === 'decorator' && <>
-                                <li>
-                                    <NavLink to='/dashboard/taskAssigned'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Task assigned">
-
-                                        <BsListTask />
-
-                                        <span className="is-drawer-close:hidden">Task assigned</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/todaySchedule'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Today schedule">
-
-                                        <RiCalendarScheduleLine />
-
-
-                                        <span className="is-drawer-close:hidden">Today schedule</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to='/dashboard/myEarnings'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Earning">
-
-                                        <FaMoneyBill1Wave />
-
-
-                                        <span className="is-drawer-close:hidden">Earning</span>
-                                    </NavLink>
-                                </li>
-                            </>
-                        }
-                        {/* my bookings */}
-                        {role === 'user' && (
-                            <li>
-                                <NavLink
-                                    to="/dashboard/myBookings"
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                                    data-tip="My bookings"
-                                >
-                                    <FaBookmark />
-                                    <span className="is-drawer-close:hidden">My bookings</span>
-                                </NavLink>
-                            </li>
-                        )}
-                      {
-                        role==='user' && <>
-                         <li>
-                            <NavLink to='/dashboard/paymentHistory'
-
-                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment history">
-
-                                <FaHistory />
-
-                                <span className="is-drawer-close:hidden">Payment history</span>
-                            </NavLink>
-                        </li>
-
-                         <li>
-                                    <NavLink to='/dashboard/beDecorator'
-
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Apply as Decorator">
-
-                                        <GrUserWorker />
-                                        <span className="is-drawer-close:hidden">Apply as Decorator</span>
-                                    </NavLink>
-                                </li>
-
-                        </>
-                             
+                    <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
                         
-                      }
-                      
-                        {/* List item */}
-                        <li>
-                            <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                {/* Settings icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-                                <span className="is-drawer-close:hidden">Settings</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                        <div className="space-y-1">
+                         
+                            <NavLink to="/dashboard" end className={navLinkClasses}>
+                                <SiFacebookgaming />
+
+                                <span>Overview</span>
+                            </NavLink>
+                        </div>
+
+                        {/* Admin Section */}
+                        {role === "admin" && (
+                            <div className="space-y-1">
+                                <h2 className="px-3 text-[11px] font-bold uppercase tracking-wider text-base-content/40 mb-2">
+                                    Admin Menu
+                                </h2>
+                                <NavLink to="/dashboard/addPackage" className={navLinkClasses}>
+                                    <LuPackagePlus className="text-base shrink-0" />
+                                    <span>Add Package</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/my-services" className={navLinkClasses}>
+                                    <MdOutlineDesignServices className="text-base shrink-0" />
+                                    <span>Edit Package</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/approveDecorator" className={navLinkClasses}>
+                                    <FaUserCheck className="text-base shrink-0" />
+                                    <span>Approve Decorator</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/userManagement" className={navLinkClasses}>
+                                    <FaUsers className="text-base shrink-0" />
+                                    <span>User Management</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/allBookings" className={navLinkClasses}>
+                                    <IoBookmarks className="text-base shrink-0" />
+                                    <span>All Bookings</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/orderAssign" className={navLinkClasses}>
+                                    <MdBorderColor className="text-base shrink-0" />
+                                    <span>Assign Order</span>
+                                </NavLink>
+                            </div>
+                        )}
+
+                        {/* Decorator Section */}
+                        {role === "decorator" && (
+                            <div className="space-y-1">
+                                <h2 className="px-3 text-[11px] font-bold uppercase tracking-wider text-base-content/40 mb-2">
+                                    Decorator Menu
+                                </h2>
+                                <NavLink to="/dashboard/taskAssigned" className={navLinkClasses}>
+                                    <BsListTask className="text-base shrink-0" />
+                                    <span>Task Assigned</span>
+                                </NavLink>
+                              
+                                <NavLink to="/dashboard/myEarnings" className={navLinkClasses}>
+                                    <FaMoneyBill1Wave className="text-base shrink-0" />
+                                    <span>Earnings</span>
+                                </NavLink>
+                            </div>
+                        )}
+
+                        {/* User Section */}
+                        {role === "user" && (
+                            <div className="space-y-1">
+                                <h2 className="px-3 text-[11px] font-bold uppercase tracking-wider text-base-content/40 mb-2">
+                                    User Menu
+                                </h2>
+                                <NavLink to="/dashboard/myBookings" className={navLinkClasses}>
+                                    <FaBookmark className="text-base shrink-0" />
+                                    <span>My Bookings</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/paymentHistory" className={navLinkClasses}>
+                                    <FaHistory className="text-base shrink-0" />
+                                    <span>Payment History</span>
+                                </NavLink>
+                                <NavLink to="/dashboard/beDecorator" className={navLinkClasses}>
+                                    <GrUserWorker className="text-base shrink-0" />
+                                    <span>Apply as Decorator</span>
+                                </NavLink>
+                            </div>
+                        )}
+                    </nav>
+                </aside>
             </div>
         </div>
     );

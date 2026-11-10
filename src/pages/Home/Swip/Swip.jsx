@@ -14,7 +14,6 @@ const logos = [img1, img2, img3, img4, img5, img6];
 const Swip = () => {
     return (
         <div>
-            <h1 className='mt-10  font-bold text-3xl text-center'>Our Features</h1>
 
             <Swiper
 
@@ -40,7 +39,7 @@ const Swip = () => {
                 {
                     logos.map((logo, index) =>
                         <SwiperSlide key={index}>
-                            <div className="h-32 flex items-center justify-center">
+                            <div className="h-15 flex items-center justify-center">
                                 <img
                                     src={logo}
                                    

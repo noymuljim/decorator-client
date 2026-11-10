@@ -51,29 +51,73 @@ const UserManagement = () => {
 
     return (
         <div>
-            <h2>Manage Users:{users.length}</h2>
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-base-100 p-6 rounded-3xl border border-base-200 shadow-sm mb-6">
+    {/* Page Title & Counter Badge */}
+    <div className="space-y-1">
+        <div className=" gap-3">
+            <h2 className="text-2xl font-extrabold text-base-content tracking-tight">
+                Manage Admin
+            </h2>
+           <h1 className="font-bold">Total Users: {users.length}
+             </h1>
+        </div>
+       
+    </div>
 
-             <p>Search Text:{searchText}</p>
-            
-            <label className="input">
-                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth="2.5"
-                        fill="none"
-                        stroke="currentColor"
-                    >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                    </g>
-                </svg>
-                <input onChange={(e)=>setSearchText(e.target.value)}
-                 type="search"
-                    className="grow"
-                    placeholder="Search users" />
+    {/* Search Input Controls */}
+    
+    <div className="w-full sm:w-80">
+         <p className="text-xs text-base-content/60 mb-2">
+            Search, filter, and review registered user accounts.
+        </p>
+        <div className="relative flex items-center">
+            {/* Search Icon */}
+            <svg 
+                className="w-4 h-4 absolute left-4 text-base-content/40 pointer-events-none transition-colors group-focus-within:text-primary" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+            >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+            </svg>
 
-            </label>
+            {/* Input Field */}
+            <input
+                type="search"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="Search users by name or email..."
+                className="input input-bordered w-full pl-11 pr-10 py-2.5 rounded-2xl bg-base-200/50 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-sm"
+            />
+
+            {/* Clear Button (Shows when typing) */}
+            {searchText && (
+                <button
+                    type="button"
+                    onClick={() => setSearchText("")}
+                    className="absolute right-3 btn btn-ghost btn-xs btn-circle text-base-content/40 hover:text-base-content"
+                >
+                    ✕
+                </button>
+            )}
+        </div>
+        
+        {/* Real-time Query Indicator Pill */}
+        {searchText && (
+            <div className="mt-2 text-xs text-base-content/60 flex items-center gap-1">
+                <span>Filtering by:</span>
+                <span className="font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                    "{searchText}"
+                </span>
+            </div>
+        )}
+    </div>
+</div>
 
 
             <div className="overflow-x-auto">

@@ -4,11 +4,11 @@ import Navbar from '../pages/shared/Navbar/navbar';
 
 const Rootlayout = () => {
     return (
-        <div className='bg-[#EAECED] min-h-screen'>
+        <div>
 
             <Navbar></Navbar>
 
-            <div className='max-w-7xl mx-auto'>
+            <div>
                 <Outlet></Outlet>
             </div>
 
