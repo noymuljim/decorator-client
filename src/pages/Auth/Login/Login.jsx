@@ -74,7 +74,7 @@ const navigate=useNavigate()
 
 
                         <button className="btn btn-primary w-full my-4">Login</button>
-                          <div className="divider">aaaAAA1!</div>
+                          <div className="divider">or</div>
 
 
                            <SocialLogin></SocialLogin>

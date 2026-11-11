@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "stylede-3b386",
-    "prod": "stylede-3b386"
+    "default": "styledecor-592db",
+    "prod": "styledecor-592db"
   },
   "targets": {},
   "etags": {}
