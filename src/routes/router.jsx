@@ -127,7 +127,7 @@ export const router = createBrowserRouter([
       {
         path: "update-service/:id",
         loader: ({ params }) =>
-          fetch(`https://stylede-backend.vercel.app/${params.id}`),
+          fetch(`http://localhost:3000/${params.id}`),
         element: <AdminRoute><UpdateService></UpdateService></AdminRoute>
       },
       {

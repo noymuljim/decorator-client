@@ -5,9 +5,8 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-  baseURL: "https://stylede-backend.vercel.app",
+  baseURL: "http://localhost:3000",
 });
-
 // runs once, not inside useEffect
 axiosSecure.interceptors.request.use(async (config) => {
   const currentUser = getAuth().currentUser;
