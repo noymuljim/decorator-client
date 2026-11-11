@@ -66,7 +66,7 @@ const Navbar = () => {
                     Contact
                 </a>
             </li>
-            {role !== "decorator" && (
+            {role !== "decorator" && role !== "admin" && (
                 <li>
                     <NavLink
                         to="/dashboard/beDecorator"

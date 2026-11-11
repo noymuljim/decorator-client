@@ -1,6 +1,6 @@
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { NavLink } from 'react-router';
+import { Navigate, NavLink } from 'react-router';
 import img1 from "../../../assets/i3.jpg";
 import img2 from "../../../assets/pngtree-elegant-wedding-stage-decorated-with-pink-flowers-and-white-curtains-indoor-image_19799024.webp";
 
@@ -27,6 +27,24 @@ const slides = [
     }
 ];
 
+
+     const handleContactClick = (e) => {
+        e.preventDefault();
+
+        const scrollToContact = () => {
+            const element = document.getElementById("contact");
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
+        };
+
+        if (location.pathname !== "/") {
+            Navigate("/");
+            setTimeout(scrollToContact, 150);
+        } else {
+            scrollToContact();
+        }
+    };
 const Banner = () => {
     return (
         <section className="">
@@ -73,9 +91,16 @@ const Banner = () => {
                                         Book Decoration Service
                                     </button>
                                 </NavLink>
-                                  <button className="btn border btn-lg text-primary rounded-full px-8 shadow-lg shadow-primary/30 hover:scale-105 transition-all duration-300">
-                                        Contact us
-                                    </button>
+                                   <a
+                    href="#contact"
+                    onClick={handleContactClick}
+                    className="btn border btn-lg text-primary rounded-full px-8 shadow-lg shadow-primary/30 hover:scale-105 transition-all duration-300"
+                >
+                    Contact us
+                </a>
+                                        <li>
+              
+            </li>
                             </div>
 
                         </div>
