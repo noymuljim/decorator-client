@@ -1,52 +1,44 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
+const axiosSecure = axios.create({
+  baseURL: "https://stylede-backend.vercel.app",
+});
 
-const axiosSecure =axios.create({
-    
-    baseURL:'https://stylede-backend.vercel.app'
-})
+// runs once, not inside useEffect
+axiosSecure.interceptors.request.use(async (config) => {
+  const currentUser = getAuth().currentUser;
+  if (currentUser) {
+    const token = await currentUser.getIdToken();
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const useAxiosSecure = () => {
-       const navigate = useNavigate()
-    const { user, LogOut } = useAuth();
+  const navigate = useNavigate();
+  const { LogOut } = useAuth();
 
-    useEffect(()=>{
-    const reqInterceptor=    axiosSecure.interceptors.request.use(config=>{
-            // config.headers.Authorization= `Bearer ${user.accessToken}`
-             if (user?.accessToken) {
-        config.headers.Authorization = `Bearer ${user.accessToken}`;
-    }
-         return config;
-
-
-           
-        })
-
-        const resInterceptor = axiosSecure.interceptors.response.use(response=>{
-             return response;
-        },(error)=>{
-            console.log(error);
-               const statusCode = error.status;
-                if (statusCode === 401 || statusCode === 403) {
-                    LogOut()
-                        .then(() => {
-                            navigate('/login')
-                        })
-                }
-            return Promise.reject(error)
-
-        })
-             return () => {
-            axiosSecure.interceptors.request.eject(reqInterceptor);
-            axiosSecure.interceptors.response.eject(resInterceptor);
+  useEffect(() => {
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const statusCode = error.response?.status;
+        if (statusCode === 401) {
+          LogOut().then(() => navigate("/login"));
+        } else if (statusCode === 403) {
+          navigate("/forbidden");
         }
-        
-    },[user,navigate,LogOut])
-    return axiosSecure
+        return Promise.reject(error);
+      }
+    );
+    return () => axiosSecure.interceptors.response.eject(resInterceptor);
+  }, [navigate, LogOut]);
 
+  return axiosSecure;
 };
 
 export default useAxiosSecure;
