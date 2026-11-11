@@ -2,6 +2,7 @@
 
 A full-stack decoration service booking and management platform built with the MERN stack.
 ## Live link: https://stylede-3b386.web.app/
+## Backend : https://github.com/noymuljim/stylede-backend
 ## Problem & Solution
 
 Finding decorators, managing event bookings, and coordinating tasks based on location and availability can be challenging.
